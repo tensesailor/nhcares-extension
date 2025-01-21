@@ -6,6 +6,6 @@ chrome.webRequest.onBeforeRequest.addListener(
 
     },
     {
-        urls: ["https://nhcares.alayacare.com/builder"]
+        urls: ["https://nhcares.alayacare.com/*"]
     }
 )
