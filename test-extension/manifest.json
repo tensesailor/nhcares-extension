@@ -3,6 +3,7 @@
   "name": "Alayacare Extension",
   "version": "1.0",
   "description": "add schedule building functionality",
+  "devtools_page": "devtools/devtools.html",
 
   "permissions": [
     "webRequest"
