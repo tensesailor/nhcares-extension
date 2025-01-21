@@ -8,13 +8,17 @@
     "webRequest"
   ],
 
+  "host_permissions": [
+    "*://*.alayacare.com/*"
+  ],
+
   "background": {
     "service_worker": "scripts/service-worker.js"
   },
   
   "content_scripts": [
     {
-      "js": ["scripts/testscript.js"],
+      "js": ["scripts/builder.js"],
       "matches": [
         "https://nhcares.alayacare.com/*"
       ]
