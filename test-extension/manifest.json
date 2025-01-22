@@ -2,37 +2,26 @@
   "manifest_version": 3,
   "name": "Alayacare Extension",
   "version": "1.0",
-  "description": "add schedule building functionality",
-  "devtools_page": "devtools/devtools.html",
+  "description": "adds additional functionality useful for NH",
 
   "permissions": [
-    "webRequest"
+    "webRequest",
+    "webRequestBlocking"
   ],
 
   "host_permissions": [
     "*://*.alayacare.com/*"
   ],
 
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "injected.js"
-      ],
-      "matches": [
-        "https://nhcares.alayacare.com/*"
-      ]
-    }
-  ],
-
   "background": {
-    "service_worker": "serviceworkers/service-worker.js"
+    "scripts": ["serviceworkers/service-worker.js"]
   },
   
   "content_scripts": [
     {
       "js": [
         "contentscripts/builder.js",
-        "contentscripts/intercept.js"
+        "contentscripts/fetchextra.js"
       ],
       "matches": [
         "https://nhcares.alayacare.com/*"
