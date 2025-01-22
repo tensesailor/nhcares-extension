@@ -13,16 +13,31 @@
     "*://*.alayacare.com/*"
   ],
 
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js"
+      ],
+      "matches": [
+        "https://nhcares.alayacare.com/*"
+      ]
+    }
+  ],
+
   "background": {
-    "service_worker": "scripts/service-worker.js"
+    "service_worker": "serviceworkers/service-worker.js"
   },
   
   "content_scripts": [
     {
-      "js": ["scripts/builder.js"],
+      "js": [
+        "contentscripts/builder.js",
+        "contentscripts/intercept.js"
+      ],
       "matches": [
         "https://nhcares.alayacare.com/*"
-      ]
+      ],
+      "run_at": "document_start"
     }
   ]
 }
