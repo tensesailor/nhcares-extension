@@ -6,7 +6,8 @@
 
   "permissions": [
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "webRequestFilterResponse"
   ],
 
   "host_permissions": [
