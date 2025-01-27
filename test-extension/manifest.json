@@ -5,9 +5,7 @@
   "description": "adds additional functionality useful for NH",
 
   "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "webRequestFilterResponse"
+    "webRequest"
   ],
 
   "host_permissions": [
@@ -15,7 +13,7 @@
   ],
 
   "background": {
-    "scripts": ["serviceworkers/service-worker.js"]
+    "service_worker": "serviceworkers/service-worker.js"
   },
   
   "content_scripts": [
