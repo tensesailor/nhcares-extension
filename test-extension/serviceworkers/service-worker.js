@@ -3,13 +3,15 @@ console.log("Service worker is running");
 chrome.webRequest.onCompleted.addListener(
     function(details) {
         if (details.initiator === "https://nhcares.alayacare.com") {
-            let visits = fetch(details.url)
+            console.log(details);
+            let tab = details.tabId;
+            fetch(details.url)
             .then(response => response.json())
             .then(data => {
-                for (var i in data.items) {
-                    let test = fetch(`https://nhcares.alayacare.com/api/v2/patients/clients/${data.items[i].client.id}`)
+                for (let i in data.items) {
+                    fetch(`https://nhcares.alayacare.com/api/v2/patients/clients/${data.items[i].client.id}`)
                     .then(clientresponse => clientresponse.json())
-                    .then(clientdata => console.log(clientdata))
+                    .then(clientdata => chrome.tabs.sendMessage(tab, [data.items[i].id, clientdata]))
                     .catch(clienterror => console.error("Error fetching client:", clienterror));
                 };
             })
@@ -18,4 +20,3 @@ chrome.webRequest.onCompleted.addListener(
     },
     { urls: ["https://nhcares.alayacare.com/api/v1/scheduler/scheduled_visits*"] }
 );
-
