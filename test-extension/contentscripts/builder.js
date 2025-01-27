@@ -1,5 +1,3 @@
-console.log("builder loaded");
-
 document.addEventListener("DOMContentLoaded", function() {
     const domObserver = new MutationObserver((_mutationList, observer) => {
         const nav = document.querySelector("div.sideNav");
