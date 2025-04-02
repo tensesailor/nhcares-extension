@@ -4,14 +4,8 @@
   "version": "1.0",
   "description": "adds additional functionality useful for NH",
 
-  "action": {
-    "default_title": "NH Toolbox",
-    "default_popup": "popups/default/toolbox.html"
-  },
-
   "permissions": [
-    "webRequest",
-    "storage"
+    "webRequest"
   ],
 
   "host_permissions": [
