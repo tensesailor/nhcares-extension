@@ -55,7 +55,7 @@ chrome.webRequest.onCompleted.addListener(
                 };
             })
             .catch(error => console.error("Error fetching visits:", error));
-        }
+        };
     },
     { urls: ["https://nhcares.alayacare.com/api/v1/scheduler/scheduled_visits*"] }
 );
