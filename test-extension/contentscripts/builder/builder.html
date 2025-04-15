@@ -1,9 +1,9 @@
-<div id="custom-div" style="border: 4px solid red; margin-left: 100px; float: left;">
-    <div id="time-inputs-form-div" style="border: 4px solid orange;">
+<div id="custom-div" style="margin-left: 100px; float: left;">
+    <div id="time-inputs-form-div">
         <form id="time-inputs-form" action="javascript:;">
-            <button type="submit" style="margin-right: 20px;" id="submit-button">Search</button>
+            <button type="submit" style="margin: 20px; padding: 10px; font-weight: bold; font-size: larger; border-radius: 5px;" id="submit-button">Search</button>
             <label>Group: </label>
-            <select name="group" id="group-select">
+            <select name="group" id="group-select" style="padding: 5px;">
                 <option value="1012">Albany</option>
                 <option value="6584">Brookings</option>
                 <option value="1003">Coos Bay</option>
@@ -21,6 +21,7 @@
                 <option value="6582">Vancouver</option>
                 <option value="10068">Warrenton</option>
             </select>
+            <button type="reset" style="margin: 20px; padding: 10px; float: right; border-radius: 5px;" id="reset-button">Reset all filters</button>
             <table id="time-inputs-table" style="width: auto;">
                 <tr>
                     <th></th>
@@ -55,18 +56,18 @@
             </table>
         </form>
     </div>
-    <table id="results-table" style="border: 4px solid yellow; width: auto;">
+    <table id="results-table" style="border: 4px solid gray; width: auto;">
         <thead>
             <tr>
-                <th></th>
-                <th>Client</th>
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px; max-width: 40px;">Hours</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Client</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Sunday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Monday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Tuesday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Wednesday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Thursday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Friday</th>
+                <th style="border: 3px solid gray; text-align: center; padding: 10px;">Saturday</th>
             </tr>
         </thead>
         <tbody id="results-table-body"></tbody>

@@ -71,6 +71,12 @@ function onBuilderPageLoad() {
                         event.preventDefault();
                         submitForm(new FormData(form));
                     });
+
+                    const customContent = document.getElementById("custom-div");
+                    customContent.style.marginLeft = document.getElementById("sidebar").offsetWidth + "px";
+                    customContent.style.width = "calc(100% - " + document.getElementById("sidebar").offsetWidth + "px)";
+                    const resultsTable = document.getElementById("results-table");
+                    resultsTable.style.width = "calc(100% - " + document.getElementById("sidebar").offsetWidth + "px)";
                 })
                 .catch(error => console.error("Error loading builder.html:", error));
         };
@@ -113,16 +119,16 @@ async function submitForm(data) {
     const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
     const promises = [];
 
-    for (const day of days) {
+    days.forEach(day => {
         if (inputs[`${day}-begin-time`] && inputs[`${day}-end-time`]) {
             const [starthour, startminute] = inputs[`${day}-begin-time`].split(":");
             const [endhour, endminute] = inputs[`${day}-end-time`].split(":");
 
-            const url = `https://nhcares.alayacare.com/api/v1/scheduler/scheduled_visits?1=1&day_of_week=${day}&visit_status=vacant&visit_status=offered&client_group_ids=${inputs["group"]}&count=999&page=1&sort_by=start_date&sort_order=asc&time_zone=America%2FVancouver&start_date_from=${start.getFullYear()}-${startmonth}-${startday}T07%3A00%3A00.000Z&start_date_to=${end.getFullYear()}-${endmonth}-${endday}T06%3A59%3A59.999Z&start_time_from=${starthour}%3A${startminute}&end_time_to=${endhour}%3A${endminute}`;
+            const url = `https://nhcares.alayacare.com/api/v1/scheduler/scheduled_visits?1=1&day_of_week=${day}&visit_status=vacant&visit_status=offered&client_group_ids=${inputs["group"]}&count=999&page=1&sort_by=start_date&sort_order=asc&time_zone=America%2FVancouver&start_date_from=${start.getFullYear()}-${startmonth}-${startday}T07%3A00%3A00.000Z&start_date_to=${end.getFullYear()}-${endmonth}-${endday}T06%3A59%3A59.999Z&start_time_from=${starthour}%3A${startminute}&end_time_to=${endhour}%3A${endminute}&is_recurrence=true`;
 
             promises.push(fetch(url).then(response => response.json()));
         }
-    }
+    });
 
     try {
         const results = await Promise.all(promises);
@@ -151,8 +157,6 @@ async function submitForm(data) {
         
         list.sort((a, b) => b.hours - a.hours);
 
-        console.log(list);
-
         const resultsTableBody = document.getElementById("results-table-body");
 
         //populate results table
@@ -160,25 +164,41 @@ async function submitForm(data) {
             const row = document.createElement("tr");
 
             const hoursCell = document.createElement("td");
-            hoursCell.style.border = "4px solid green";
             hoursCell.innerText = entry.hours;
+            hoursCell.style.border =  "2px solid gray";
+            hoursCell.style.borderLeft = "3px solid gray";
+            hoursCell.style.textAlign = "center";
+            hoursCell.style.padding = "10px";
             row.appendChild(hoursCell);
 
             const nameCell = document.createElement("td");
-            nameCell.style.border = "4px solid blue";
             nameCell.innerText = entry.name;
+            nameCell.style.border =  "2px solid gray";
+            nameCell.style.borderLeft = "3px solid gray";
+            nameCell.style.paddingLeft = "10px";
             row.appendChild(nameCell);
 
+            //for each day of the week, add a cell with the shifts
             Object.keys(entry.shifts).forEach(key => {
                 const shiftCell = document.createElement("td");
-                shiftCell.style.border = "4px solid purple";    
-                shiftCell.innerText = entry.shifts[key].map(shift => `${shift.Beginning} to ${shift.Ending}`).join("\n");
+
+                //add all shifts of the day to cell
+                //shiftCell.innerText = entry.shifts[key].map(shift => `${shift.Beginning}-${shift.Ending}`).join("\n");
+                entry.shifts[key].forEach((shift, index) => {
+                    const shiftDiv = document.createElement("div");
+                    shiftDiv.style.paddingLeft = "10px";
+                    shiftDiv.innerText = `${shift.Beginning} - ${shift.Ending}`;
+                    
+                    if (index < entry.shifts[key].length - 1) {
+                        shiftDiv.style.borderBottom = "2px dotted gray";
+                    }
+                    
+                    shiftCell.appendChild(shiftDiv);
+                });
+                shiftCell.style.border = "2px solid gray";
+                shiftCell.style.borderLeft = "3px solid gray";
                 row.appendChild(shiftCell);
             });
-
-            /*const shiftsCell = document.createElement("td");
-            shiftsCell.innerText = JSON.stringify(entry.shifts, null, 2);
-            row.appendChild(shiftsCell);*/
 
             resultsTableBody.appendChild(row);
         });

@@ -48,6 +48,9 @@ chrome.webRequest.onCompleted.addListener(
                             visibletags += ", " + clientdata.tags[vital];
                         };
 
+                        if (clientdata.tags.includes("Medication Administration")){
+                            visibletags += ", Med Admin";
+                        }
                         chrome.tabs.sendMessage(tab, [data.items[i].id, location, visibletags]);
 
                     })
