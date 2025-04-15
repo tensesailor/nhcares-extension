@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const nav = document.querySelector("div.sideNav");
         
         if (nav) {
-            domObserver.disconnect();
+            observer.disconnect();
             const btn = document.createElement("li");
             btn.setAttribute("data-v-52b1fb15", true);
             btn.setAttribute("data-acl", "schedule/admin");
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //builds the custom page for schedule builder
 function onBuilderPageLoad() {
-    const elementObserver = new MutationObserver((mutationsList, observer) => {
+    const elementObserver = new MutationObserver((_mutationList, observer) => {
         const element = document.querySelector(".page-not-found");
         if (element && window.location.hash === "#/builder") {
             observer.disconnect();
@@ -137,7 +137,7 @@ async function submitForm(data) {
         results.forEach(data => {
             data.items.forEach(item => {
                 entry = list.find(entry => entry.id === item.client.id);
-                const duration = (item.end_at - item.start_at) / 3600;
+                const duration = ((item.end_at - item.start_at) / 3600);
                 const date = new Date(item.start_at * 1000);
                 const dayOfWeek = days[date.getDay()];
                 var starttime = new Date(item.start_at * 1000);
@@ -164,7 +164,7 @@ async function submitForm(data) {
             const row = document.createElement("tr");
 
             const hoursCell = document.createElement("td");
-            hoursCell.innerText = entry.hours;
+            hoursCell.innerText = entry.hours.toString().substring(0, 4);
             hoursCell.style.border =  "2px solid gray";
             hoursCell.style.borderLeft = "3px solid gray";
             hoursCell.style.textAlign = "center";
