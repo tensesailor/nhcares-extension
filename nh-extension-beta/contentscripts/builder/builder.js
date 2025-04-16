@@ -1,4 +1,4 @@
-//remove custom html if user leaves builder page
+//remove custom html if leaving builder page
 window.addEventListener("hashchange", function() {
     if (window.location.hash === "#/builder") {
         onBuilderPageLoad();
@@ -138,8 +138,10 @@ async function submitForm(data) {
             data.items.forEach(item => {
                 entry = list.find(entry => entry.id === item.client.id);
                 const duration = ((item.end_at - item.start_at) / 3600);
-                const date = new Date(item.start_at * 1000);
-                const dayOfWeek = days[date.getDay()];
+                const dateStart = new Date(item.start_at * 1000);
+                const dateEnd = new Date(item.end_at * 1000);
+                const isNOC = dateStart.getDate() === dateEnd.getDate() ? false : true;
+                const dayOfWeek = days[dateStart.getDay()];
                 var starttime = new Date(item.start_at * 1000);
                 starttime = formatTime(starttime);
                 var endtime = new Date(item.end_at * 1000);
@@ -148,7 +150,16 @@ async function submitForm(data) {
                     entry.hours += duration;
                     entry.shifts[dayOfWeek].push({Beginning: starttime, Ending: endtime});
                 } else {
-                    entry = {id: item.client.id, hours: duration, name: item.client.name, shifts: {sunday: [], monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: []}}
+                    //define entry for client of shift if none exists
+                    entry = {
+                        id: item.client.id,
+                        hours: duration,
+                        name: item.client.name,
+                        shifts: {sunday: [], monday: [], tuesday: [], wednesday: [], thursday: [], friday: [], saturday: []},
+                        city: "",
+                        gender: "",
+                        preference: []
+                    }
                     list.push(entry);
                     entry.shifts[dayOfWeek].push({Beginning: starttime, Ending: endtime});
                 }
