@@ -48,9 +48,6 @@ chrome.webRequest.onCompleted.addListener(
                             visibletags += ", " + clientdata.tags[vital];
                         };
 
-                        if (clientdata.tags.includes("Medication Administration")){
-                            visibletags += ", Med Admin";
-                        }
                         chrome.tabs.sendMessage(tab, [data.items[i].id, location, visibletags]);
 
                     })
@@ -58,7 +55,7 @@ chrome.webRequest.onCompleted.addListener(
                 };
             })
             .catch(error => console.error("Error fetching visits:", error));
-        };
+        }
     },
     { urls: ["https://nhcares.alayacare.com/api/v1/scheduler/scheduled_visits*"] }
 );
